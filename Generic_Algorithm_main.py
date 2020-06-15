@@ -41,11 +41,11 @@ def selection(arr):
     sx = []
     for i in range(4):
         p = rn.random()
-        if (p < ratio[0]):
+        if p < ratio[0]:
             sx.append(arr[0])
-        elif (p < ratio[1]):
+        elif p < ratio[1]:
             sx.append(arr[1])
-        elif (p < ratio[2]):
+        elif p < ratio[2]:
             sx.append(arr[2])
         else:
             sx.append(arr[3])
