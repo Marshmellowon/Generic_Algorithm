@@ -22,12 +22,12 @@ def sik(x):
 
 # selection(선택 연산)
 def selection(arr):
-    print("arr is : ", arr)
+    # print("arr is : ", arr)
     fit = []
     ratio = []
     for i in range(4):
         fit.append(sik(arr[i]))
-    print("fit: ", fit)
+    # print("fit: ", fit)
 
     # 비율
     for i in range(4):
@@ -35,8 +35,8 @@ def selection(arr):
             ratio.append(fit[i] / sum(fit))
         else:
             ratio.append(ratio[i - 1] + fit[i] / sum(fit))
-    print("ratio: ", ratio, "ratio sum:", sum(ratio))
-    print("fit: ", fit, "fit sum: ", sum(fit))
+    # print("ratio: ", ratio, "ratio sum:", sum(ratio))
+    # print("fit: ", fit, "fit sum: ", sum(fit))
 
     sx = []
     for i in range(4):
@@ -55,15 +55,46 @@ def selection(arr):
 def int2Bin(str):
     binlist = []
     for i in range(4):
-        binlist.append(bin(str[i]))
+        binsrting = '{0:>8}'.format(bin(str[i])).replace("b", "0").replace(" ", "0")
+        binlist.append(binsrting)
     return binlist
 
 
-# TODO: crossover 함수 작성
-# TODO: invert 함수 작성
-# TODO: mutation 함수 작성
+def crossover(arr):
+    strarr = []
+    for i in range(2):
+        bita = str(arr[i])
+        bitb = str(arr[i + 1])
+
+        strarr.append(bita[:4] + bitb[4:])
+        strarr.append(bitb[:4] + bita[4:])
+
+    return strarr
+
+
+def invert(char):
+    ran = rn.random()
+    a = int(char, 2)
+    print(type(a), a)
+    for i in len(char):
+        p = 1 / 32
+        if ran < p:
+            a = 1 << i ^ a
+    return a
+
+
+# TODO: mutation 함수 고치기
+def mutation(mut):
+    mutarr = []
+    mutint = list(map(str, mut))
+    for i in range(4):
+        mutarr.append(invert(mutint[i]))
+    return mutarr
+
 
 # main
+
+
 start = 1
 end = 31
 # test
@@ -71,5 +102,22 @@ end = 31
 # 초기값 출력
 initval = init(start, end)
 print("selection: ", selection(initval))
+binarystr = int2Bin(selection(initval))
+cross = crossover(binarystr)
+print(binarystr)
+print("cross: ", cross)
 
-print("bin list: ", int2Bin(selection(initval)))
+print("mutation: ", mutation(cross))
+
+# for t in range(1000):
+#     sx = selection(initval)
+#     cx = crossover(sx)
+#     mx = mutation(cx)
+#
+#     f = []
+#     max = 0
+#     for i in len(mx):
+#         f.append(sik(mx[i]))
+#         max = max(max, f)
+#         print(f[i])
+#     print(max)
