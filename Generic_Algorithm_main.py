@@ -1,6 +1,6 @@
 import random as rn
 import pandas as pd
-import matplotlib.pylab as plt
+import matplotlib.pyplot as plt
 
 
 # https://wikidocs.net/book/1553
@@ -103,7 +103,13 @@ start = 1
 end = 31
 x = []
 y = []
+xinit = []
+yinit = []
 for i in range(1000):
+    # 원래식
+    ranvalue = rn.randint(start, end)
+    ranvalue2 = sik(ranvalue)
+
     # 초기값 출력
     initval = init(start, end)
 
@@ -129,12 +135,19 @@ for i in range(1000):
 
     x.append(mutationed[0])
     y.append(mutationed[1])
+    xinit.append(ranvalue)
+    yinit.append(ranvalue2)
+
+initial = pd.DataFrame(
+    {"x": xinit, "y": yinit}
+)
 
 body = pd.DataFrame(
     {'x': x, 'y': y}
 )
 
-plt.scatter(body['x'], body['y'])
+plt.scatter(body['x'], body['y'], marker="o")
+plt.scatter(initial["x"], initial["y"], marker="x")
 plt.xlabel('weight')
 plt.ylabel('height')
 plt.show()
