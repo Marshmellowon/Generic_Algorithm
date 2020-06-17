@@ -1,5 +1,6 @@
 import random as rn
-import scipy as sp
+import pandas as pd
+import matplotlib.pylab as plt
 
 
 # https://wikidocs.net/book/1553
@@ -96,12 +97,12 @@ def mutation(mut):
     return output
 
 
-start = 1
-end = 31
-
 # -------------------------------main------------------------------
 
-
+start = 1
+end = 31
+x = []
+y = []
 for i in range(1000):
     # 초기값 출력
     initval = init(start, end)
@@ -118,8 +119,24 @@ for i in range(1000):
     # mutation 선언
     mutationed = mutation(cross)
 
+    # 산점도 좌표 선언
+
     print("----------Data start----------")
     print("selection: ", select)
     print("selected value's binary: ", binarystr)
     print("crossover: ", cross)
     print("mutation: ", mutationed)
+
+    x.append(mutationed[0])
+    y.append(mutationed[1])
+
+body = pd.DataFrame(
+    {'x': x, 'y': y}
+)
+
+plt.scatter(body['x'], body['y'])
+plt.xlabel('weight')
+plt.ylabel('height')
+plt.show()
+
+# TODO: 데이터 찾기
