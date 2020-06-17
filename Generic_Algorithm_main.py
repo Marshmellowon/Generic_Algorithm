@@ -83,14 +83,22 @@ def invert(char):
 
 def mutation(mut):
     mutarr = []
+    mutarr2 = []
+    output = []
     mutint = list(map(str, mut))
     for i in range(4):
-        mutarr.append(sik(invert(mutint[i])))
-    return mutarr
+        mutarr.append(invert(mutint[i]))
+        mutarr2.append(sik(invert(mutint[i])))
+    maxvalue = max(mutarr)
+    maxvalue2 = max(mutarr2)
+    output.append(maxvalue)
+    output.append(maxvalue2)
+    return output
 
 
 start = 1
 end = 31
+
 # -------------------------------main------------------------------
 
 
@@ -102,7 +110,7 @@ for i in range(1000):
     select = selection(initval)
 
     # binarystr 선언
-    binarystr = int2Bin(selection(initval))
+    binarystr = int2Bin(select)
 
     # crossover 선언
     cross = crossover(binarystr)
@@ -112,8 +120,6 @@ for i in range(1000):
 
     print("----------Data start----------")
     print("selection: ", select)
-    # print("selection value: ", sik(select))
     print("selected value's binary: ", binarystr)
     print("crossover: ", cross)
     print("mutation: ", mutationed)
-    print("max value: ", max(mutationed))
