@@ -27,7 +27,6 @@ def selection(arr):
     ratio = []
     for i in range(4):
         fit.append(sik(arr[i]))
-    # print("fit: ", fit)
 
     # 비율
     for i in range(4):
@@ -75,49 +74,46 @@ def crossover(arr):
 def invert(char):
     ran = rn.random()
     a = int(char, 2)
-    print(type(a), a)
-    for i in len(char):
+    for i in range(5):
         p = 1 / 32
         if ran < p:
-            a = 1 << i ^ a
+            a << 3
     return a
 
 
-# TODO: mutation 함수 고치기
 def mutation(mut):
     mutarr = []
     mutint = list(map(str, mut))
     for i in range(4):
-        mutarr.append(invert(mutint[i]))
+        mutarr.append(sik(invert(mutint[i])))
     return mutarr
-
-
-# main
 
 
 start = 1
 end = 31
-# test
+# -------------------------------main------------------------------
 
-# 초기값 출력
-initval = init(start, end)
-print("selection: ", selection(initval))
-binarystr = int2Bin(selection(initval))
-cross = crossover(binarystr)
-print(binarystr)
-print("cross: ", cross)
 
-print("mutation: ", mutation(cross))
+for i in range(1000):
+    # 초기값 출력
+    initval = init(start, end)
 
-# for t in range(1000):
-#     sx = selection(initval)
-#     cx = crossover(sx)
-#     mx = mutation(cx)
-#
-#     f = []
-#     max = 0
-#     for i in len(mx):
-#         f.append(sik(mx[i]))
-#         max = max(max, f)
-#         print(f[i])
-#     print(max)
+    # selection 출력
+    select = selection(initval)
+
+    # binarystr 선언
+    binarystr = int2Bin(selection(initval))
+
+    # crossover 선언
+    cross = crossover(binarystr)
+
+    # mutation 선언
+    mutationed = mutation(cross)
+
+    print("----------Data start----------")
+    print("selection: ", select)
+    # print("selection value: ", sik(select))
+    print("selected value's binary: ", binarystr)
+    print("crossover: ", cross)
+    print("mutation: ", mutationed)
+    print("max value: ", max(mutationed))
