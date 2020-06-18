@@ -72,14 +72,35 @@ def crossover(arr):
     return strarr
 
 
+def binformat(x):
+    binformat = '{0:>8}'.format(bin(x)).replace("b", "0").replace(" ", "0")
+    return binformat
+
+
 def invert(char):
     ran = rn.random()
-    a = int(char, 2)
+    a = int(char, 2)  # 숫자
+    abin = binformat(a)
+    abinstr = str(abin)
+
     for i in range(5):
         p = 1 / 32
         if ran < p:
-            a << 3
-    return a
+            reta = 0
+            if abinstr[6:7] == "1":
+                reta = a & ~(1 << 1)
+                print(abin)
+                print(reta)
+                print(binformat(reta))
+                print("reta1: ", reta)
+
+            elif abinstr[6:7] == "0":
+                reta = a | (1 << 1)
+                print("else")
+                print(binformat(reta))
+                print("reta2: ", reta)
+            return reta
+        return a
 
 
 def mutation(mut):
@@ -97,7 +118,7 @@ def mutation(mut):
     return output
 
 
-# -------------------------------main------------------------------
+# -------------------------------main------------------------------ #
 
 start = 1
 end = 31
@@ -125,14 +146,13 @@ for i in range(1000):
     # mutation 선언
     mutationed = mutation(cross)
 
-    # 산점도 좌표 선언
-
     print("----------Data start----------")
     print("selection: ", select)
     print("selected value's binary: ", binarystr)
     print("crossover: ", cross)
     print("mutation: ", mutationed)
 
+    # 산점도 좌표 선언
     x.append(mutationed[0])
     y.append(mutationed[1])
     xinit.append(ranvalue)
@@ -148,8 +168,8 @@ body = pd.DataFrame(
 
 plt.scatter(body['x'], body['y'], marker="o")
 plt.scatter(initial["x"], initial["y"], marker="x")
-plt.xlabel('weight')
-plt.ylabel('height')
+plt.xlabel('x')
+plt.ylabel('y')
 plt.show()
 
 # TODO: 데이터 찾기
