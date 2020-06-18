@@ -89,16 +89,9 @@ def invert(char):
             reta = 0
             if abinstr[6:7] == "1":
                 reta = a & ~(1 << 1)
-                print(abin)
-                print(reta)
-                print(binformat(reta))
-                print("reta1: ", reta)
 
             elif abinstr[6:7] == "0":
                 reta = a | (1 << 1)
-                print("else")
-                print(binformat(reta))
-                print("reta2: ", reta)
             return reta
         return a
 
